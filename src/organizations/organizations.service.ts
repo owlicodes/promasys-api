@@ -21,4 +21,8 @@ export class OrganizationsService {
   findOrganizationByName(name: string) {
     return this.organizationsRepository.findOrganizationByName(name);
   }
+
+  findOrganizations(userId: string) {
+    return this.organizationsRepository.findOrganizations(userId);
+  }
 }

@@ -38,4 +38,12 @@ export class OrganizationsRepository {
       },
     });
   }
+
+  findOrganizations(userId: string) {
+    return this.prismaService.organization.findMany({
+      where: {
+        ownerId: userId,
+      },
+    });
+  }
 }
