@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 
-import { UsersModule } from "src/users/users.module";
-
 import { EnvConfigModule } from "../env-config/env-config.module";
 import { EnvConfigService } from "../env-config/env-config.service";
+import { OrganizationsModule } from "../organizations/organizations.module";
+import { UsersModule } from "../users/users.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
@@ -21,6 +21,7 @@ import { AuthService } from "./auth.service";
       inject: [EnvConfigService],
     }),
     UsersModule,
+    OrganizationsModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],

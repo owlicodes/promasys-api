@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 
 import { OAuth2Client } from "google-auth-library";
+import { OrganizationsService } from "src/organizations/organizations.service";
 
 import { EnvConfigService } from "../env-config/env-config.service";
 import { UsersService } from "../users/users.service";
@@ -12,7 +13,8 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly envConfigService: EnvConfigService
+    private readonly envConfigService: EnvConfigService,
+    private readonly organizationsService: OrganizationsService
   ) {}
 
   async googleSignIn(data: GoogleUserDto) {
@@ -36,6 +38,12 @@ export class AuthService {
           email: payload.email,
           name: payload.name,
           googleId: payload.sub,
+        });
+
+        await this.organizationsService.createOrganization({
+          name: `${payload.name} Default`,
+          description: "Default organization",
+          userId: user.id,
         });
       }
 
