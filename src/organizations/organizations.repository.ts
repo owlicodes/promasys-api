@@ -44,6 +44,9 @@ export class OrganizationsRepository {
       where: {
         ownerId: userId,
       },
+      include: {
+        owner: true,
+      },
     });
   }
 }
