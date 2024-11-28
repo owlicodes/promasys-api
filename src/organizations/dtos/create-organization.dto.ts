@@ -8,5 +8,5 @@ export class CreateOrganizationDto {
   description: string;
 
   @IsString()
-  userId: string;
+  ownerId: string;
 }

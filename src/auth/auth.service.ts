@@ -43,7 +43,7 @@ export class AuthService {
         await this.organizationsService.createOrganization({
           name: `${payload.name} Default`,
           description: "Default organization",
-          userId: user.id,
+          ownerId: user.id,
         });
       }
 

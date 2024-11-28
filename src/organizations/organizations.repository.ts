@@ -9,7 +9,22 @@ export class OrganizationsRepository {
 
   createOrganization(data: CreateOrganizationDto) {
     return this.prismaService.organization.create({
-      data,
+      data: {
+        name: data.name,
+        description: data.description,
+        owner: {
+          connect: { id: data.ownerId },
+        },
+        members: {
+          create: {
+            user: {
+              connect: {
+                id: data.ownerId,
+              },
+            },
+          },
+        },
+      },
     });
   }
 
