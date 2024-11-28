@@ -10,4 +10,7 @@ export class GoogleUserDto {
 
   @IsString()
   name: string;
+
+  @IsString()
+  idToken: string;
 }

@@ -16,4 +16,14 @@ export class EnvConfigService {
   getJwtSecret(): string {
     return this.configService.get<string>("JWT_SECRET", { infer: true })!;
   }
+
+  getGoogleClientId(): string {
+    return this.configService.get<string>("GOOGLE_CLIENT_ID", { infer: true })!;
+  }
+
+  getGoogleClientSecret(): string {
+    return this.configService.get<string>("GOOGLE_CLIENT_SECRET", {
+      infer: true,
+    })!;
+  }
 }
