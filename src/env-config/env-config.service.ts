@@ -12,4 +12,8 @@ export class EnvConfigService {
   getPort(): string {
     return this.configService.get<number>("PORT", { infer: true })!;
   }
+
+  getJwtSecret(): string {
+    return this.configService.get<string>("JWT_SECRET", { infer: true })!;
+  }
 }

@@ -1,9 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
+import { AuthModule } from "./auth/auth.module";
 import { EnvironmentVariables, envSchema } from "./env-config/env-config";
 import { EnvConfigModule } from "./env-config/env-config.module";
 import { HealthModule } from "./health/health.module";
+import { PrismaService } from "./prisma/prisma.service";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
@@ -27,8 +30,10 @@ import { HealthModule } from "./health/health.module";
     }),
     EnvConfigModule,
     HealthModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [PrismaService],
 })
 export class AppModule {}
