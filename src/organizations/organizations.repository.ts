@@ -37,13 +37,14 @@ export class OrganizationsRepository {
     });
   }
 
-  findOrganizationByName(name: string) {
+  findOrganizationByName(name: string, ownerId: string) {
     return this.prismaService.organization.findFirst({
       where: {
         name: {
           equals: name,
           mode: "insensitive",
         },
+        ownerId,
       },
     });
   }

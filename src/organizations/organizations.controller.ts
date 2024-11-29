@@ -25,8 +25,11 @@ export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
   @Post()
-  createOrganization(@Body() data: CreateOrganizationDto) {
-    return this.organizationsService.createOrganization(data);
+  createOrganization(
+    @Body() data: CreateOrganizationDto,
+    @Request() req: { user: TUser }
+  ) {
+    return this.organizationsService.createOrganization(data, req.user.id);
   }
 
   @Get()

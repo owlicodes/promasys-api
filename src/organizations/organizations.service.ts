@@ -14,8 +14,8 @@ export class OrganizationsService {
     private readonly organizationsRepository: OrganizationsRepository
   ) {}
 
-  async createOrganization(data: CreateOrganizationDto) {
-    const organization = await this.findOrganizationByName(data.name);
+  async createOrganization(data: CreateOrganizationDto, ownerId: string) {
+    const organization = await this.findOrganizationByName(data.name, ownerId);
     if (organization)
       throw new BadRequestException(
         "Organization with the same name already exists."
@@ -23,8 +23,8 @@ export class OrganizationsService {
     return this.organizationsRepository.createOrganization(data);
   }
 
-  findOrganizationByName(name: string) {
-    return this.organizationsRepository.findOrganizationByName(name);
+  findOrganizationByName(name: string, ownerId: string) {
+    return this.organizationsRepository.findOrganizationByName(name, ownerId);
   }
 
   findOrganizations(userId: string) {
@@ -35,15 +35,17 @@ export class OrganizationsService {
     organizationId: string,
     data: UpdateOrganizationDto
   ) {
-    let organization =
+    const organizationToUpdate =
       await this.organizationsRepository.findOrganizationById(organizationId);
-    if (!organization)
+    if (!organizationToUpdate)
       throw new NotFoundException("Organization does not exists.");
 
-    organization = await this.organizationsRepository.findOrganizationByName(
-      data.name
-    );
-    if (organization)
+    const organization =
+      await this.organizationsRepository.findOrganizationByName(
+        data.name,
+        data.ownerId
+      );
+    if (organization && organization.name !== organizationToUpdate.name)
       throw new BadRequestException(
         "An organization with the same name already exists."
       );

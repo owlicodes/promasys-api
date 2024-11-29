@@ -40,11 +40,14 @@ export class AuthService {
           googleId: payload.sub,
         });
 
-        await this.organizationsService.createOrganization({
-          name: `${payload.name} Default`,
-          description: "Default organization",
-          ownerId: user.id,
-        });
+        await this.organizationsService.createOrganization(
+          {
+            name: `${payload.name} Default`,
+            description: "Default organization",
+            ownerId: user.id,
+          },
+          user.id
+        );
       }
 
       return this.signIn({
