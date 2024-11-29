@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateOrganizationDto } from "./dtos/create-organization.dto";
+import { UpdateOrganizationDto } from "./dtos/update-organization.dto";
 
 @Injectable()
 export class OrganizationsRepository {
@@ -28,6 +29,14 @@ export class OrganizationsRepository {
     });
   }
 
+  findOrganizationById(organizationId: string) {
+    return this.prismaService.organization.findUnique({
+      where: {
+        id: organizationId,
+      },
+    });
+  }
+
   findOrganizationByName(name: string) {
     return this.prismaService.organization.findFirst({
       where: {
@@ -46,6 +55,15 @@ export class OrganizationsRepository {
       },
       include: {
         owner: true,
+      },
+    });
+  }
+
+  updateOrganization(organizationId: string, data: UpdateOrganizationDto) {
+    return this.prismaService.organization.update({
+      data,
+      where: {
+        id: organizationId,
       },
     });
   }
