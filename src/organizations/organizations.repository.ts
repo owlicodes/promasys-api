@@ -60,6 +60,15 @@ export class OrganizationsRepository {
     });
   }
 
+  findOrgMember(userId: string, organizationId: string) {
+    return this.prismaService.organizationMember.findFirst({
+      where: {
+        userId,
+        organizationId,
+      },
+    });
+  }
+
   updateOrganization(organizationId: string, data: UpdateOrganizationDto) {
     return this.prismaService.organization.update({
       data,

@@ -14,6 +14,7 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { TUser } from "../types";
 import { CreateOrganizationDto } from "./dtos/create-organization.dto";
 import { UpdateOrganizationDto } from "./dtos/update-organization.dto";
+import { IsOrgMember } from "./guards/is-org-member.guard";
 import { OrganizationsService } from "./organizations.service";
 
 @Controller({
@@ -37,6 +38,7 @@ export class OrganizationsController {
     return this.organizationsService.findOrganizations(req.user.id);
   }
 
+  @UseGuards(IsOrgMember)
   @Patch(":organizationId")
   updateOrganization(
     @Param("organizationId") organizationId: string,
@@ -45,6 +47,7 @@ export class OrganizationsController {
     return this.organizationsService.updateOrganization(organizationId, data);
   }
 
+  @UseGuards(IsOrgMember)
   @Delete(":organizationId")
   deleteOrganization(@Param("organizationId") organizationId: string) {
     return this.organizationsService.deleteOrganization(organizationId);

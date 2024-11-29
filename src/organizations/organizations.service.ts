@@ -31,6 +31,10 @@ export class OrganizationsService {
     return this.organizationsRepository.findOrganizations(userId);
   }
 
+  findOrgMember(userId: string, organizationId: string) {
+    return this.organizationsRepository.findOrgMember(userId, organizationId);
+  }
+
   async updateOrganization(
     organizationId: string,
     data: UpdateOrganizationDto
