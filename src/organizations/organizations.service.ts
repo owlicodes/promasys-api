@@ -35,12 +35,16 @@ export class OrganizationsService {
     return this.organizationsRepository.findOrgMember(userId, organizationId);
   }
 
+  findOrganizationById(organizationId: string) {
+    return this.organizationsRepository.findOrganizationById(organizationId);
+  }
+
   async updateOrganization(
     organizationId: string,
     data: UpdateOrganizationDto
   ) {
     const organizationToUpdate =
-      await this.organizationsRepository.findOrganizationById(organizationId);
+      await this.findOrganizationById(organizationId);
     if (!organizationToUpdate)
       throw new NotFoundException("Organization does not exists.");
 
@@ -60,7 +64,12 @@ export class OrganizationsService {
     );
   }
 
-  deleteOrganization(organizationId: string) {
+  async deleteOrganization(organizationId: string) {
+    const organizationToUpdate =
+      await this.findOrganizationById(organizationId);
+    if (!organizationToUpdate)
+      throw new NotFoundException("Organization does not exists.");
+
     return this.organizationsRepository.deleteOrganization(organizationId);
   }
 }

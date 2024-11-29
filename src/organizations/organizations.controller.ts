@@ -17,11 +17,11 @@ import { UpdateOrganizationDto } from "./dtos/update-organization.dto";
 import { IsOrgMember } from "./guards/is-org-member.guard";
 import { OrganizationsService } from "./organizations.service";
 
+@UseGuards(JwtAuthGuard)
 @Controller({
   path: "organizations",
   version: "1",
 })
-@UseGuards(JwtAuthGuard)
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
