@@ -27,6 +27,6 @@ async function bootstrap() {
     })
   );
 
-  await app.listen(envConfigService.getPort());
+  await app.listen(envConfigService.getPort() || 5000);
 }
 bootstrap();

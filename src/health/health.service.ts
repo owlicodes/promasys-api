@@ -5,7 +5,7 @@ export class HealthService {
   checkHealth() {
     return {
       status: "healthy...",
-      version: "0.0.1",
+      version: "0.0.2",
     };
   }
 }
