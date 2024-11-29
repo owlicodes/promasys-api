@@ -67,4 +67,12 @@ export class OrganizationsRepository {
       },
     });
   }
+
+  deleteOrganization(organizationId: string) {
+    return this.prismaService.organization.delete({
+      where: {
+        id: organizationId,
+      },
+    });
+  }
 }

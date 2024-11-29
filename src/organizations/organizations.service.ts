@@ -53,4 +53,8 @@ export class OrganizationsService {
       data
     );
   }
+
+  deleteOrganization(organizationId: string) {
+    return this.organizationsRepository.deleteOrganization(organizationId);
+  }
 }

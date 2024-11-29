@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -39,5 +40,10 @@ export class OrganizationsController {
     @Body() data: UpdateOrganizationDto
   ) {
     return this.organizationsService.updateOrganization(organizationId, data);
+  }
+
+  @Delete(":organizationId")
+  deleteOrganization(@Param("organizationId") organizationId: string) {
+    return this.organizationsService.deleteOrganization(organizationId);
   }
 }
