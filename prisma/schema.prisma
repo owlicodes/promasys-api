@@ -16,7 +16,10 @@ model User {
   updatedAt DateTime @updatedAt()
 
   ownedOrganizations Organization[]       @relation("OrganizationOwner")
-  memberOf           OrganizationMember[]
+  organizations      OrganizationMember[]
+
+  ownedProjects Project[]       @relation("ProjectOwner")
+  projects      ProjectMember[]
 
   @@map("user")
 }
@@ -31,7 +34,8 @@ model Organization {
   owner   User   @relation("OrganizationOwner", fields: [ownerId], references: [id])
   ownerId String @db.ObjectId
 
-  members OrganizationMember[]
+  members  OrganizationMember[]
+  projects Project[]
 
   @@map("organization")
 }
@@ -47,4 +51,35 @@ model OrganizationMember {
 
   @@unique([userId, organizationId])
   @@map("organizationMember")
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @db.ObjectId
+
+  owner   User   @relation("ProjectOwner", fields: [ownerId], references: [id])
+  ownerId String @db.ObjectId
+
+  members ProjectMember[]
+
+  @@map("project")
+}
+
+model ProjectMember {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String  @db.ObjectId
+
+  @@unique([userId, projectId])
+  @@map("projectMember")
 }
