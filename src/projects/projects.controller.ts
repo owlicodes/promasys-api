@@ -30,7 +30,7 @@ export class ProjectsController {
     return this.projectsService.createProject(data);
   }
 
-  @Get(":organizationId")
+  @Get("/organization/:organizationId")
   findProjectsByUserAndOrg(
     @Request() req: { user: TUser },
     @Param("organizationId") organizationId: string
