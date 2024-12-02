@@ -41,6 +41,11 @@ export class ProjectsController {
     );
   }
 
+  @Get(":projectId")
+  findProjectById(@Param("projectId") projectId: string) {
+    return this.projectsService.findProjectById(projectId, true);
+  }
+
   @UseGuards(IsOrgMember)
   @Patch(":projectId/organization/:organizationId")
   updateProject(

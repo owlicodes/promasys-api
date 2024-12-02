@@ -49,8 +49,8 @@ export class ProjectsService {
     );
   }
 
-  findProjectById(projectId: string) {
-    return this.projectsRepository.findProjectById(projectId);
+  findProjectById(projectId: string, withOwner: boolean = false) {
+    return this.projectsRepository.findProjectById(projectId, withOwner);
   }
 
   async updateProject(projectId: string, data: UpdateProjectDto) {

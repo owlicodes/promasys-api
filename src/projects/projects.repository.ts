@@ -57,10 +57,13 @@ export class ProjectsRepository {
     });
   }
 
-  findProjectById(projectId: string) {
+  findProjectById(projectId: string, withOwner: boolean = false) {
     return this.prismaService.project.findFirst({
       where: {
         id: projectId,
+      },
+      include: {
+        owner: withOwner,
       },
     });
   }
