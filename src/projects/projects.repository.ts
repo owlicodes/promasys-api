@@ -52,6 +52,7 @@ export class ProjectsRepository {
       },
       include: {
         owner: true,
+        organization: true,
       },
     });
   }
