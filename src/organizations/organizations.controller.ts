@@ -49,7 +49,13 @@ export class OrganizationsController {
 
   @UseGuards(IsOrgMember)
   @Delete(":organizationId")
-  deleteOrganization(@Param("organizationId") organizationId: string) {
-    return this.organizationsService.deleteOrganization(organizationId);
+  deleteOrganization(
+    @Request() req: { user: TUser },
+    @Param("organizationId") organizationId: string
+  ) {
+    return this.organizationsService.deleteOrganization(
+      req.user.id,
+      organizationId
+    );
   }
 }

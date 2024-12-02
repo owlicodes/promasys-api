@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 
+import { SharedProjectsService } from "../shared-projects/shared-projects.service";
 import { CreateOrganizationDto } from "./dtos/create-organization.dto";
 import { UpdateOrganizationDto } from "./dtos/update-organization.dto";
 import { OrganizationsRepository } from "./organizations.repository";
@@ -11,7 +12,8 @@ import { OrganizationsRepository } from "./organizations.repository";
 @Injectable()
 export class OrganizationsService {
   constructor(
-    private readonly organizationsRepository: OrganizationsRepository
+    private readonly organizationsRepository: OrganizationsRepository,
+    private readonly sharedProjectsService: SharedProjectsService
   ) {}
 
   async createOrganization(data: CreateOrganizationDto, ownerId: string) {
@@ -64,11 +66,20 @@ export class OrganizationsService {
     );
   }
 
-  async deleteOrganization(organizationId: string) {
+  async deleteOrganization(userId: string, organizationId: string) {
     const organizationToUpdate =
       await this.findOrganizationById(organizationId);
     if (!organizationToUpdate)
       throw new NotFoundException("Organization does not exists.");
+
+    const projects = await this.sharedProjectsService.findProjectsByUserAndOrg(
+      userId,
+      organizationId
+    );
+    if (projects?.length > 0)
+      throw new BadRequestException(
+        "Unable to delete organization, there are projects found in this organization."
+      );
 
     return this.organizationsRepository.deleteOrganization(organizationId);
   }
