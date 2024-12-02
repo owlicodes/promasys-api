@@ -40,4 +40,11 @@ export class ProjectsService {
       projectName
     );
   }
+
+  findProjectsByUserAndOrg(userId: string, organizationId: string) {
+    return this.projectsRepository.findProjectsByUserAndOrg(
+      userId,
+      organizationId
+    );
+  }
 }

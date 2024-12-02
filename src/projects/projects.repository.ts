@@ -42,4 +42,16 @@ export class ProjectsRepository {
       },
     });
   }
+
+  findProjectsByUserAndOrg(userId: string, organizationId: string) {
+    return this.prismaService.project.findMany({
+      where: {
+        organizationId,
+        OR: [{ ownerId: userId }, { members: { some: { userId } } }],
+      },
+      include: {
+        owner: true,
+      },
+    });
+  }
 }
