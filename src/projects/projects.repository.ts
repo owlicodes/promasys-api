@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateProjectDto } from "./dtos/create-project.dto";
+import { UpdateProjectDto } from "./dtos/update-project-dto";
 
 @Injectable()
 export class ProjectsRepository {
@@ -51,6 +52,23 @@ export class ProjectsRepository {
       },
       include: {
         owner: true,
+      },
+    });
+  }
+
+  findProjectById(projectId: string) {
+    return this.prismaService.project.findFirst({
+      where: {
+        id: projectId,
+      },
+    });
+  }
+
+  updateProject(projectId: string, data: UpdateProjectDto) {
+    return this.prismaService.project.update({
+      data,
+      where: {
+        id: projectId,
       },
     });
   }

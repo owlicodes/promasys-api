@@ -3,14 +3,17 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Request,
   UseGuards,
 } from "@nestjs/common";
 
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { IsOrgMember } from "../organizations/guards/is-org-member.guard";
 import { TUser } from "../types";
 import { CreateProjectDto } from "./dtos/create-project.dto";
+import { UpdateProjectDto } from "./dtos/update-project-dto";
 import { ProjectsService } from "./projects.service";
 
 @UseGuards(JwtAuthGuard)
@@ -35,5 +38,14 @@ export class ProjectsController {
       req.user.id,
       organizationId
     );
+  }
+
+  @UseGuards(IsOrgMember)
+  @Patch(":projectId/organization/:organizationId")
+  updateProject(
+    @Param("projectId") projectId: string,
+    @Body() data: UpdateProjectDto
+  ) {
+    return this.projectsService.updateProject(projectId, data);
   }
 }
