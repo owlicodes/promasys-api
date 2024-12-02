@@ -72,4 +72,12 @@ export class ProjectsRepository {
       },
     });
   }
+
+  deleteProject(projectId: string) {
+    return this.prismaService.project.delete({
+      where: {
+        id: projectId,
+      },
+    });
+  }
 }

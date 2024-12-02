@@ -60,11 +60,20 @@ export class ProjectsService {
       data.name
     );
 
+    if (!projectToUpdate)
+      throw new BadRequestException("Project does not exists");
+
     if (project && projectToUpdate.id !== project.id)
       throw new BadRequestException(
         "A project with the same name already exists for this organization."
       );
 
     return this.projectsRepository.updateProject(projectId, data);
+  }
+
+  async deleteProject(projectId: string) {
+    const project = await this.findProjectById(projectId);
+    if (!project) throw new BadRequestException("Project does not exists");
+    return this.projectsRepository.deleteProject(projectId);
   }
 }

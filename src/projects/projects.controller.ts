@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -47,5 +48,11 @@ export class ProjectsController {
     @Body() data: UpdateProjectDto
   ) {
     return this.projectsService.updateProject(projectId, data);
+  }
+
+  @UseGuards(IsOrgMember)
+  @Delete(":projectId")
+  deleteProject(@Param("projectId") projectId: string) {
+    return this.projectsService.deleteProject(projectId);
   }
 }
