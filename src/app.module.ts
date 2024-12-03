@@ -7,6 +7,9 @@ import { EnvConfigModule } from "./env-config/env-config.module";
 import { HealthModule } from "./health/health.module";
 import { OrganizationsModule } from "./organizations/organizations.module";
 import { PrismaService } from "./prisma/prisma.service";
+import { ProjectsModule } from "./projects/projects.module";
+import { SharedProjectsModule } from "./shared-projects/shared-projects.module";
+import { SprintsModule } from "./sprints/sprints.module";
 import { UsersModule } from "./users/users.module";
 
 @Module({
@@ -34,6 +37,9 @@ import { UsersModule } from "./users/users.module";
     AuthModule,
     UsersModule,
     OrganizationsModule,
+    ProjectsModule,
+    SharedProjectsModule,
+    SprintsModule,
   ],
   controllers: [],
   providers: [PrismaService],
