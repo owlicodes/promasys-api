@@ -20,6 +20,10 @@ export class SprintsService {
     return this.sprintsRepository.findSingleSprintForProject(projectId);
   }
 
+  findSprintById(sprintId: string) {
+    return this.sprintsRepository.findSprintById(sprintId);
+  }
+
   updateSprint(sprintId: string, data: UpdateSprintDto) {
     return this.sprintsRepository.updateSprint(sprintId, data);
   }

@@ -65,6 +65,12 @@ export class ProjectsController {
     return this.sprintsService.findSprintsByProject(projectId);
   }
 
+  @UseGuards(IsProjectMember)
+  @Get(":projectId/sprints/:sprintId")
+  findSprintById(@Param("sprintId") sprintId: string) {
+    return this.sprintsService.findSprintById(sprintId);
+  }
+
   @UseGuards(IsOrgMember)
   @Patch(":projectId/organization/:organizationId")
   updateProject(

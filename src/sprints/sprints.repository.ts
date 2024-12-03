@@ -34,6 +34,14 @@ export class SprintsRepository {
     });
   }
 
+  findSprintById(sprintId: string) {
+    return this.prismaService.sprint.findUnique({
+      where: {
+        id: sprintId,
+      },
+    });
+  }
+
   updateSprint(sprintId: string, data: CreateSprintDto) {
     return this.prismaService.sprint.update({
       data: {
