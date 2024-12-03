@@ -37,12 +37,6 @@ export class ProjectsController {
     return this.projectsService.createProject(data);
   }
 
-  @UseGuards(IsProjectMember)
-  @Post(":projectId/sprints")
-  createProjectSprint(@Body() data: CreateSprintDto) {
-    return this.sprintsService.createSprint(data);
-  }
-
   @Get("/organization/:organizationId")
   findProjectsByUserAndOrg(
     @Request() req: { user: TUser },
@@ -59,6 +53,28 @@ export class ProjectsController {
     return this.projectsService.findProjectById(projectId, true);
   }
 
+  @UseGuards(IsOrgMember)
+  @Patch(":projectId/organization/:organizationId")
+  updateProject(
+    @Param("projectId") projectId: string,
+    @Body() data: UpdateProjectDto
+  ) {
+    return this.projectsService.updateProject(projectId, data);
+  }
+
+  @UseGuards(IsOrgMember)
+  @Delete(":projectId")
+  deleteProject(@Param("projectId") projectId: string) {
+    return this.projectsService.deleteProject(projectId);
+  }
+
+  // Sprint Related Routes
+  @UseGuards(IsProjectMember)
+  @Post(":projectId/sprints")
+  createProjectSprint(@Body() data: CreateSprintDto) {
+    return this.sprintsService.createSprint(data);
+  }
+
   @UseGuards(IsProjectMember)
   @Get(":projectId/sprints")
   findProjectSprints(@Param("projectId") projectId: string) {
@@ -71,15 +87,6 @@ export class ProjectsController {
     return this.sprintsService.findSprintById(sprintId);
   }
 
-  @UseGuards(IsOrgMember)
-  @Patch(":projectId/organization/:organizationId")
-  updateProject(
-    @Param("projectId") projectId: string,
-    @Body() data: UpdateProjectDto
-  ) {
-    return this.projectsService.updateProject(projectId, data);
-  }
-
   @UseGuards(IsProjectMember)
   @Patch(":projectId/sprints/:sprintId")
   updateProjectSprint(
@@ -87,12 +94,6 @@ export class ProjectsController {
     @Body() data: CreateSprintDto
   ) {
     return this.sprintsService.updateSprint(sprintId, data);
-  }
-
-  @UseGuards(IsOrgMember)
-  @Delete(":projectId")
-  deleteProject(@Param("projectId") projectId: string) {
-    return this.projectsService.deleteProject(projectId);
   }
 
   @UseGuards(IsProjectMember)
