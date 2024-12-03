@@ -11,6 +11,7 @@ import { ProjectsModule } from "./projects/projects.module";
 import { SharedProjectsModule } from "./shared-projects/shared-projects.module";
 import { SprintsModule } from "./sprints/sprints.module";
 import { UsersModule } from "./users/users.module";
+import { WorkItemsModule } from "./work-items/work-items.module";
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UsersModule } from "./users/users.module";
     ProjectsModule,
     SharedProjectsModule,
     SprintsModule,
+    WorkItemsModule,
   ],
   controllers: [],
   providers: [PrismaService],
