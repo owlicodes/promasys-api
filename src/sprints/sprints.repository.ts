@@ -25,4 +25,16 @@ export class SprintsRepository {
       },
     });
   }
+
+  updateSprint(sprintId: string, data: CreateSprintDto) {
+    return this.prismaService.sprint.update({
+      data: {
+        ...data,
+        status: data.status as SPRINT_STATUS,
+      },
+      where: {
+        id: sprintId,
+      },
+    });
+  }
 }

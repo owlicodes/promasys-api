@@ -38,7 +38,7 @@ export class ProjectsController {
   }
 
   @UseGuards(IsProjectMember)
-  @Post(":projectId/sprint")
+  @Post(":projectId/sprints")
   createProjectSprint(@Body() data: CreateSprintDto) {
     return this.sprintsService.createSprint(data);
   }
@@ -72,6 +72,15 @@ export class ProjectsController {
     @Body() data: UpdateProjectDto
   ) {
     return this.projectsService.updateProject(projectId, data);
+  }
+
+  @UseGuards(IsProjectMember)
+  @Patch(":projectId/sprints/:sprintId")
+  updateProjectSprint(
+    @Param("sprintId") sprintId: string,
+    @Body() data: CreateSprintDto
+  ) {
+    return this.sprintsService.updateSprint(sprintId, data);
   }
 
   @UseGuards(IsOrgMember)
