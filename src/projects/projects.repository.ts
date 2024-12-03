@@ -74,7 +74,7 @@ export class ProjectsRepository {
         id: projectId,
         members: {
           some: {
-            id: userId,
+            userId,
           },
         },
       },

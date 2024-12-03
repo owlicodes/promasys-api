@@ -17,4 +17,12 @@ export class SprintsRepository {
       },
     });
   }
+
+  findSprintsByProject(projectId: string) {
+    return this.prismaService.sprint.findMany({
+      where: {
+        projectId,
+      },
+    });
+  }
 }

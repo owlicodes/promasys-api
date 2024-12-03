@@ -10,4 +10,8 @@ export class SprintsService {
   createSprint(data: CreateSprintDto) {
     return this.sprintsRepository.createSprint(data);
   }
+
+  findSprintsByProject(projectId: string) {
+    return this.sprintsRepository.findSprintsByProject(projectId);
+  }
 }

@@ -8,5 +8,6 @@ import { SprintsService } from "./sprints.service";
 @Module({
   controllers: [SprintsController],
   providers: [SprintsService, SprintsRepository, PrismaService],
+  exports: [SprintsService],
 })
 export class SprintsModule {}
