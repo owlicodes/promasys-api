@@ -5,6 +5,7 @@ import {
 } from "@nestjs/common";
 
 import { OrganizationsService } from "../organizations/organizations.service";
+import { SprintsService } from "../sprints/sprints.service";
 import { CreateProjectDto } from "./dtos/create-project.dto";
 import { UpdateProjectDto } from "./dtos/update-project-dto";
 import { ProjectsRepository } from "./projects.repository";
@@ -13,7 +14,8 @@ import { ProjectsRepository } from "./projects.repository";
 export class ProjectsService {
   constructor(
     private readonly projectsRepository: ProjectsRepository,
-    private readonly organizationsService: OrganizationsService
+    private readonly organizationsService: OrganizationsService,
+    private readonly sprintsService: SprintsService
   ) {}
 
   async createProject(data: CreateProjectDto) {
@@ -78,6 +80,14 @@ export class ProjectsService {
   async deleteProject(projectId: string) {
     const project = await this.findProjectById(projectId);
     if (!project) throw new BadRequestException("Project does not exists");
+
+    const sprint =
+      await this.sprintsService.findSingleSprintForProject(projectId);
+    if (sprint)
+      throw new BadRequestException(
+        "Unable to delete project, there are sprints found in this project."
+      );
+
     return this.projectsRepository.deleteProject(projectId);
   }
 }
