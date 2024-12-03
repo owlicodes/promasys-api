@@ -68,6 +68,19 @@ export class ProjectsRepository {
     });
   }
 
+  findUserInProject(projectId: string, userId: string) {
+    return this.prismaService.project.findFirst({
+      where: {
+        id: projectId,
+        members: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
   updateProject(projectId: string, data: UpdateProjectDto) {
     return this.prismaService.project.update({
       data,

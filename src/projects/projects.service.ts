@@ -53,6 +53,10 @@ export class ProjectsService {
     return this.projectsRepository.findProjectById(projectId, withOwner);
   }
 
+  findUserInProject(projectId: string, userId: string) {
+    return this.projectsRepository.findUserInProject(projectId, userId);
+  }
+
   async updateProject(projectId: string, data: UpdateProjectDto) {
     const projectToUpdate = await this.findProjectById(projectId);
     const project = await this.findProjectInOrgByName(
