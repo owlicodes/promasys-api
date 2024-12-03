@@ -10,6 +10,8 @@ import {
   UseGuards,
 } from "@nestjs/common";
 
+import { CreateSprintDto } from "src/sprints/dtos/create-sprint.dto";
+
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { IsOrgMember } from "../organizations/guards/is-org-member.guard";
 import { SprintsService } from "../sprints/sprints.service";
@@ -33,6 +35,12 @@ export class ProjectsController {
   @Post()
   createProject(@Body() data: CreateProjectDto) {
     return this.projectsService.createProject(data);
+  }
+
+  @UseGuards(IsProjectMember)
+  @Post(":projectId/sprint")
+  createProjectSprint(@Body() data: CreateSprintDto) {
+    return this.sprintsService.createSprint(data);
   }
 
   @Get("/organization/:organizationId")
