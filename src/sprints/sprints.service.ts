@@ -19,4 +19,8 @@ export class SprintsService {
   updateSprint(sprintId: string, data: UpdateSprintDto) {
     return this.sprintsRepository.updateSprint(sprintId, data);
   }
+
+  deleteSprint(sprintId: string) {
+    return this.sprintsRepository.deleteSprint(sprintId);
+  }
 }

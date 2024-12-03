@@ -88,4 +88,10 @@ export class ProjectsController {
   deleteProject(@Param("projectId") projectId: string) {
     return this.projectsService.deleteProject(projectId);
   }
+
+  @UseGuards(IsProjectMember)
+  @Delete(":projectId/sprints/:sprintId")
+  deleteProjectSprint(@Param("sprintId") sprintId: string) {
+    return this.sprintsService.deleteSprint(sprintId);
+  }
 }

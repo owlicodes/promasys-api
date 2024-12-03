@@ -37,4 +37,12 @@ export class SprintsRepository {
       },
     });
   }
+
+  deleteSprint(sprintId: string) {
+    return this.prismaService.sprint.delete({
+      where: {
+        id: sprintId,
+      },
+    });
+  }
 }
