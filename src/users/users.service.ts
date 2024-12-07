@@ -11,6 +11,10 @@ export class UsersService {
     return this.usersRepository.findUserByEmail(email);
   }
 
+  findUsersByProject(projectId: string) {
+    return this.usersRepository.findUsersByProject(projectId);
+  }
+
   createUser(data: CreateUserDto) {
     return this.usersRepository.createUser(data);
   }

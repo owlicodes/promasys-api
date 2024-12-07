@@ -7,6 +7,12 @@ import { CreateUserDto } from "./dtos/create-user.dto";
 export class UsersRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
+  createUser(data: CreateUserDto) {
+    return this.prismaService.user.create({
+      data,
+    });
+  }
+
   findUserByEmail(email: string) {
     return this.prismaService.user.findUnique({
       where: {
@@ -15,9 +21,15 @@ export class UsersRepository {
     });
   }
 
-  createUser(data: CreateUserDto) {
-    return this.prismaService.user.create({
-      data,
+  findUsersByProject(projectId: string) {
+    return this.prismaService.user.findMany({
+      where: {
+        projects: {
+          some: {
+            projectId,
+          },
+        },
+      },
     });
   }
 }

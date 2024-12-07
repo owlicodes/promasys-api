@@ -16,6 +16,7 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { IsOrgMember } from "../organizations/guards/is-org-member.guard";
 import { SprintsService } from "../sprints/sprints.service";
 import { TUser } from "../types";
+import { UsersService } from "../users/users.service";
 import { CreateWorkItemDto } from "../work-items/dtos/create-work-item.dto";
 import { WorkItemsService } from "../work-items/work-items.service";
 import { CreateProjectDto } from "./dtos/create-project.dto";
@@ -32,7 +33,8 @@ export class ProjectsController {
   constructor(
     private readonly projectsService: ProjectsService,
     private readonly sprintsService: SprintsService,
-    private readonly workItemsService: WorkItemsService
+    private readonly workItemsService: WorkItemsService,
+    private readonly usersService: UsersService
   ) {}
 
   @Post()
@@ -51,9 +53,16 @@ export class ProjectsController {
     );
   }
 
+  @UseGuards(IsProjectMember)
   @Get(":projectId")
   findProjectById(@Param("projectId") projectId: string) {
     return this.projectsService.findProjectById(projectId, true);
+  }
+
+  @UseGuards(IsProjectMember)
+  @Get(":projectId/users")
+  findUsersByProject(@Param("projectId") projectId: string) {
+    return this.usersService.findUsersByProject(projectId);
   }
 
   @UseGuards(IsOrgMember)
