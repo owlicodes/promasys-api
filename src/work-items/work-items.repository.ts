@@ -20,4 +20,12 @@ export class WorkItemsRepository {
       },
     });
   }
+
+  findWorkItemsByProjectId(projectId: string) {
+    return this.prismaService.workItem.findMany({
+      where: {
+        projectId,
+      },
+    });
+  }
 }

@@ -10,4 +10,8 @@ export class WorkItemsService {
   createWorkItem(data: CreateWorkItemDto, userId: string) {
     return this.workItemsRepository.createWorkItem(data, userId);
   }
+
+  findWorkItemsByProjectId(projectId: string) {
+    return this.workItemsRepository.findWorkItemsByProjectId(projectId);
+  }
 }
