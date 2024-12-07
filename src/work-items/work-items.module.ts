@@ -8,5 +8,6 @@ import { WorkItemsService } from "./work-items.service";
 @Module({
   controllers: [WorkItemsController],
   providers: [WorkItemsService, WorkItemsRepository, PrismaService],
+  exports: [WorkItemsService],
 })
 export class WorkItemsModule {}

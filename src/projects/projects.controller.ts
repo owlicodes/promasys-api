@@ -16,6 +16,8 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { IsOrgMember } from "../organizations/guards/is-org-member.guard";
 import { SprintsService } from "../sprints/sprints.service";
 import { TUser } from "../types";
+import { CreateWorkItemDto } from "../work-items/dtos/create-work-item.dto";
+import { WorkItemsService } from "../work-items/work-items.service";
 import { CreateProjectDto } from "./dtos/create-project.dto";
 import { UpdateProjectDto } from "./dtos/update-project-dto";
 import { IsProjectMember } from "./guards/is-project-member.guard";
@@ -29,7 +31,8 @@ import { ProjectsService } from "./projects.service";
 export class ProjectsController {
   constructor(
     private readonly projectsService: ProjectsService,
-    private readonly sprintsService: SprintsService
+    private readonly sprintsService: SprintsService,
+    private readonly workItemsService: WorkItemsService
   ) {}
 
   @Post()
@@ -100,5 +103,15 @@ export class ProjectsController {
   @Delete(":projectId/sprints/:sprintId")
   deleteProjectSprint(@Param("sprintId") sprintId: string) {
     return this.sprintsService.deleteSprint(sprintId);
+  }
+
+  // Work Item Related Routes
+  @UseGuards(IsProjectMember)
+  @Post(":projectId/work-items")
+  createWorkItem(
+    @Body() data: CreateWorkItemDto,
+    @Request() req: { user: TUser }
+  ) {
+    return this.workItemsService.createWorkItem(data, req.user.id);
   }
 }

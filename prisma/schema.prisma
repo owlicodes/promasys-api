@@ -124,7 +124,7 @@ enum WORK_ITEM_STATUS {
 enum WORK_ITEM_TYPE {
   NONE
   STORY
-  TAKS
+  TASK
   BUG
 }
 
@@ -141,8 +141,8 @@ model WorkItem {
   createdBy       User   @relation("WorkItemCreator", fields: [createdByUserId], references: [id])
   createdByUserId String @db.ObjectId
 
-  assignedTo       User   @relation("WorkItemOwner", fields: [assignedToUserId], references: [id])
-  assignedToUserId String @db.ObjectId
+  assignedTo       User?   @relation("WorkItemOwner", fields: [assignedToUserId], references: [id])
+  assignedToUserId String? @db.ObjectId
 
   project   Project @relation(fields: [projectId], references: [id])
   projectId String  @db.ObjectId
