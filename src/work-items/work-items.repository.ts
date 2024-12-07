@@ -16,6 +16,7 @@ export class WorkItemsRepository {
         type: data.type as WORK_ITEM_TYPE,
         status: data.status as WORK_ITEM_STATUS,
         createdByUserId: userId,
+        assignedToUserId: data.assignedToUserId || userId,
       },
     });
   }
