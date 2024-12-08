@@ -11,6 +11,7 @@ import {
 } from "@nestjs/common";
 
 import { CreateSprintDto } from "src/sprints/dtos/create-sprint.dto";
+import { UpdateWorkItemDto } from "src/work-items/dtos/update-work-item.dto";
 
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { IsOrgMember } from "../organizations/guards/is-org-member.guard";
@@ -134,5 +135,14 @@ export class ProjectsController {
   @Get(":projectId/work-items/:workItemId")
   findWorkItemById(@Param("workItemId") workItemId: string) {
     return this.workItemsService.findWorkItemById(workItemId);
+  }
+
+  @UseGuards(IsProjectMember)
+  @Post(":projectId/work-items/:workItemId")
+  updateWorkItem(
+    @Body() data: UpdateWorkItemDto,
+    @Param("workItemId") workItemId: string
+  ) {
+    return this.workItemsService.updateWorkItem(data, workItemId);
   }
 }

@@ -4,6 +4,7 @@ import { WORK_ITEM_STATUS, WORK_ITEM_TYPE } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateWorkItemDto } from "./dtos/create-work-item.dto";
+import { UpdateWorkItemDto } from "./dtos/update-work-item.dto";
 
 @Injectable()
 export class WorkItemsRepository {
@@ -31,6 +32,19 @@ export class WorkItemsRepository {
 
   findWorkItemById(workItemId: string) {
     return this.prismaService.workItem.findFirst({
+      where: {
+        id: workItemId,
+      },
+    });
+  }
+
+  updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
+    return this.prismaService.workItem.update({
+      data: {
+        ...data,
+        type: data.type as WORK_ITEM_TYPE,
+        status: data.status as WORK_ITEM_STATUS,
+      },
       where: {
         id: workItemId,
       },

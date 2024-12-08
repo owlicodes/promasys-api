@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { CreateWorkItemDto } from "./dtos/create-work-item.dto";
+import { UpdateWorkItemDto } from "./dtos/update-work-item.dto";
 import { WorkItemsRepository } from "./work-items.repository";
 
 @Injectable()
@@ -17,5 +18,9 @@ export class WorkItemsService {
 
   findWorkItemById(workItemId: string) {
     return this.workItemsRepository.findWorkItemById(workItemId);
+  }
+
+  updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
+    return this.workItemsRepository.updateWorkItem(data, workItemId);
   }
 }
