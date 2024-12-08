@@ -28,4 +28,12 @@ export class WorkItemsRepository {
       },
     });
   }
+
+  findWorkItemById(workItemId: string) {
+    return this.prismaService.workItem.findFirst({
+      where: {
+        id: workItemId,
+      },
+    });
+  }
 }

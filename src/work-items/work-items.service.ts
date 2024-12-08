@@ -14,4 +14,8 @@ export class WorkItemsService {
   findWorkItemsByProjectId(projectId: string) {
     return this.workItemsRepository.findWorkItemsByProjectId(projectId);
   }
+
+  findWorkItemById(workItemId: string) {
+    return this.workItemsRepository.findWorkItemById(workItemId);
+  }
 }

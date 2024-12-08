@@ -129,4 +129,10 @@ export class ProjectsController {
   findWorkItemsByProjectId(@Param("projectId") projectId: string) {
     return this.workItemsService.findWorkItemsByProjectId(projectId);
   }
+
+  @UseGuards(IsProjectMember)
+  @Get(":projectId/work-items/:workItemId")
+  findWorkItemById(@Param("workItemId") workItemId: string) {
+    return this.workItemsService.findWorkItemById(workItemId);
+  }
 }
