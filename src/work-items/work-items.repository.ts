@@ -50,4 +50,12 @@ export class WorkItemsRepository {
       },
     });
   }
+
+  deleteWorkItem(workItemId: string) {
+    return this.prismaService.workItem.delete({
+      where: {
+        id: workItemId,
+      },
+    });
+  }
 }

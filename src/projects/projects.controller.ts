@@ -138,11 +138,17 @@ export class ProjectsController {
   }
 
   @UseGuards(IsProjectMember)
-  @Post(":projectId/work-items/:workItemId")
+  @Patch(":projectId/work-items/:workItemId")
   updateWorkItem(
     @Body() data: UpdateWorkItemDto,
     @Param("workItemId") workItemId: string
   ) {
     return this.workItemsService.updateWorkItem(data, workItemId);
+  }
+
+  @UseGuards(IsProjectMember)
+  @Delete(":projectId/work-items/:workItemId")
+  deleteWorkItem(@Param("workItemId") workItemId: string) {
+    return this.workItemsService.deleteWorkItem(workItemId);
   }
 }

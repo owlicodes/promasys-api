@@ -23,4 +23,8 @@ export class WorkItemsService {
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
     return this.workItemsRepository.updateWorkItem(data, workItemId);
   }
+
+  deleteWorkItem(workItemId: string) {
+    return this.workItemsRepository.deleteWorkItem(workItemId);
+  }
 }
