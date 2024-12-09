@@ -39,6 +39,9 @@ export class SprintsRepository {
       where: {
         id: sprintId,
       },
+      include: {
+        workItems: true,
+      },
     });
   }
 
