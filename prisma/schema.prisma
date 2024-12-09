@@ -150,5 +150,10 @@ model WorkItem {
   sprint   Sprint? @relation(fields: [sprintId], references: [id])
   sprintId String? @db.ObjectId
 
+  parentWorkItem   WorkItem? @relation("WorkItemHierarchy", fields: [parentWorkItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentWorkItemId String?   @db.ObjectId
+
+  childWorkItems WorkItem[] @relation("WorkItemHierarchy")
+
   @@map("workItem")
 }

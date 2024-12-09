@@ -20,6 +20,10 @@ export class WorkItemsService {
     return this.workItemsRepository.findWorkItemById(workItemId);
   }
 
+  findStoryWorkItemsByProjectId(projectId: string) {
+    return this.workItemsRepository.findStoryWorkItemsByProjectId(projectId);
+  }
+
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
     return this.workItemsRepository.updateWorkItem(data, workItemId);
   }

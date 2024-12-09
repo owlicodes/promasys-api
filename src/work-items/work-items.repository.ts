@@ -38,6 +38,15 @@ export class WorkItemsRepository {
     });
   }
 
+  findStoryWorkItemsByProjectId(projectId: string) {
+    return this.prismaService.workItem.findMany({
+      where: {
+        projectId,
+        type: "STORY",
+      },
+    });
+  }
+
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
     return this.prismaService.workItem.update({
       data: {

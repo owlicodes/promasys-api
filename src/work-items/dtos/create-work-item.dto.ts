@@ -20,6 +20,10 @@ export class CreateWorkItemDto {
   @IsString()
   assignedToUserId: string;
 
+  @IsOptional()
+  @IsString()
+  parentWorkItemId: string;
+
   @IsString()
   projectId: string;
 

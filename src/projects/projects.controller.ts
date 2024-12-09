@@ -138,6 +138,12 @@ export class ProjectsController {
   }
 
   @UseGuards(IsProjectMember)
+  @Get(":projectId/stories")
+  findStoryWorkItemsByProjectId(@Param("projectId") projectId: string) {
+    return this.workItemsService.findStoryWorkItemsByProjectId(projectId);
+  }
+
+  @UseGuards(IsProjectMember)
   @Patch(":projectId/work-items/:workItemId")
   updateWorkItem(
     @Body() data: UpdateWorkItemDto,
