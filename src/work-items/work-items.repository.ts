@@ -35,6 +35,9 @@ export class WorkItemsRepository {
       where: {
         id: workItemId,
       },
+      include: {
+        childWorkItems: true,
+      },
     });
   }
 
