@@ -47,6 +47,14 @@ export class WorkItemsRepository {
     });
   }
 
+  checkIfWorkItemHasChild(workItemId: string) {
+    return this.prismaService.workItem.findFirst({
+      where: {
+        parentWorkItemId: workItemId,
+      },
+    });
+  }
+
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
     return this.prismaService.workItem.update({
       data: {

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 
 import { CreateWorkItemDto } from "./dtos/create-work-item.dto";
 import { UpdateWorkItemDto } from "./dtos/update-work-item.dto";
@@ -28,7 +28,15 @@ export class WorkItemsService {
     return this.workItemsRepository.updateWorkItem(data, workItemId);
   }
 
-  deleteWorkItem(workItemId: string) {
+  async deleteWorkItem(workItemId: string) {
+    const hasChild =
+      await this.workItemsRepository.checkIfWorkItemHasChild(workItemId);
+
+    if (hasChild)
+      throw new BadRequestException(
+        "Cannot delete story, please delete child work items first."
+      );
+
     return this.workItemsRepository.deleteWorkItem(workItemId);
   }
 }
