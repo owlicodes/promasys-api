@@ -9,6 +9,10 @@ export class WorkItemsService {
   constructor(private readonly workItemsRepository: WorkItemsRepository) {}
 
   createWorkItem(data: CreateWorkItemDto, userId: string) {
+    if (!data.parentWorkItemId) {
+      delete data.parentWorkItemId;
+    }
+
     return this.workItemsRepository.createWorkItem(data, userId);
   }
 
