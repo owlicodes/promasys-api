@@ -29,6 +29,10 @@ export class WorkItemsService {
   }
 
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
+    if (!data.parentWorkItemId) {
+      delete data.parentWorkItemId;
+    }
+
     return this.workItemsRepository.updateWorkItem(data, workItemId);
   }
 
