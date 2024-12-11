@@ -27,6 +27,9 @@ export class WorkItemsRepository {
       where: {
         projectId,
       },
+      include: {
+        sprint: true,
+      },
     });
   }
 
