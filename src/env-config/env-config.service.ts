@@ -26,4 +26,16 @@ export class EnvConfigService {
       infer: true,
     })!;
   }
+
+  getRateLimitTtl(): number {
+    return this.configService.get<number>("RATE_LIMIT_TTL", {
+      infer: true,
+    })!;
+  }
+
+  getRateLimit(): number {
+    return this.configService.get<number>("RATE_LIMIT", {
+      infer: true,
+    })!;
+  }
 }
