@@ -53,6 +53,20 @@ export class WorkItemsRepository {
     });
   }
 
+  findBacklogWorkItems(projectId: string) {
+    return this.prismaService.workItem.findMany({
+      where: {
+        projectId,
+        status: "PENDING",
+        sprint: null,
+        // OR: [{ sprintId: null }, { sprintId: undefined }],
+      },
+      include: {
+        sprint: true,
+      },
+    });
+  }
+
   checkIfWorkItemHasChild(workItemId: string) {
     return this.prismaService.workItem.findFirst({
       where: {

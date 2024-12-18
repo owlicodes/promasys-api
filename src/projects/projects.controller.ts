@@ -132,6 +132,12 @@ export class ProjectsController {
   }
 
   @UseGuards(IsProjectMember)
+  @Get(":projectId/work-items/backlogs")
+  findBacklogWorkItems(@Param("projectId") projectId: string) {
+    return this.workItemsService.findBacklogWorkItems(projectId);
+  }
+
+  @UseGuards(IsProjectMember)
   @Get(":projectId/work-items/:workItemId")
   findWorkItemById(@Param("workItemId") workItemId: string) {
     return this.workItemsService.findWorkItemById(workItemId);

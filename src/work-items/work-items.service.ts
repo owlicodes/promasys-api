@@ -28,6 +28,10 @@ export class WorkItemsService {
     return this.workItemsRepository.findStoryWorkItemsByProjectId(projectId);
   }
 
+  findBacklogWorkItems(projectId: string) {
+    return this.workItemsRepository.findBacklogWorkItems(projectId);
+  }
+
   updateWorkItem(data: UpdateWorkItemDto, workItemId: string) {
     if (!data.parentWorkItemId) {
       delete data.parentWorkItemId;
