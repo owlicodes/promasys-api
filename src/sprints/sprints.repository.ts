@@ -40,7 +40,11 @@ export class SprintsRepository {
         id: sprintId,
       },
       include: {
-        workItems: true,
+        workItems: {
+          include: {
+            sprint: true,
+          },
+        },
       },
     });
   }
