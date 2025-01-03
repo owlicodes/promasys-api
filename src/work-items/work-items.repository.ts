@@ -39,7 +39,11 @@ export class WorkItemsRepository {
         id: workItemId,
       },
       include: {
-        childWorkItems: true,
+        childWorkItems: {
+          include: {
+            sprint: true,
+          },
+        },
       },
     });
   }
