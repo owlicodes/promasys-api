@@ -23,6 +23,9 @@ export class SprintsRepository {
       where: {
         projectId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
   }
 
