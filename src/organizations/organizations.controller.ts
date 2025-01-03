@@ -10,7 +10,10 @@ import {
   UseGuards,
 } from "@nestjs/common";
 
+import { InvitesService } from "src/invites/invites.service";
+
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { CreateInviteDto } from "../invites/dtos/create-invite.dto";
 import { TUser } from "../types";
 import { CreateOrganizationDto } from "./dtos/create-organization.dto";
 import { UpdateOrganizationDto } from "./dtos/update-organization.dto";
@@ -23,7 +26,10 @@ import { OrganizationsService } from "./organizations.service";
   version: "1",
 })
 export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) {}
+  constructor(
+    private readonly organizationsService: OrganizationsService,
+    private readonly invitesService: InvitesService
+  ) {}
 
   @Post()
   createOrganization(
@@ -57,5 +63,17 @@ export class OrganizationsController {
       req.user.id,
       organizationId
     );
+  }
+
+  // Invites
+
+  @UseGuards(IsOrgMember)
+  @Post(":organizationId/invites")
+  createInvite(
+    @Body() data: CreateInviteDto,
+    @Request() req: { user: TUser },
+    @Param("organizationId") organizationId: string
+  ) {
+    return this.invitesService.createInvite(data, req.user.id, organizationId);
   }
 }

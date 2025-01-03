@@ -24,6 +24,8 @@ model User {
   workItemsCreated  WorkItem[] @relation("WorkItemCreator")
   workItemsAssigned WorkItem[] @relation("WorkItemOwner")
 
+  invites Invite[]
+
   @@map("user")
 }
 
@@ -39,6 +41,8 @@ model Organization {
 
   members  OrganizationMember[]
   projects Project[]
+
+  invites Invite[]
 
   @@map("organization")
 }
@@ -156,4 +160,25 @@ model WorkItem {
   childWorkItems WorkItem[] @relation("WorkItemHierarchy")
 
   @@map("workItem")
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model Invite {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  status    InviteStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @db.ObjectId
+
+  createdBy       User   @relation(fields: [createdByUserId], references: [id])
+  createdByUserId String @db.ObjectId
+
+  @@map("invite")
 }
