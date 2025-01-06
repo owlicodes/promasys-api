@@ -24,4 +24,16 @@ export class InvitesRepository {
       },
     });
   }
+
+  findInvitesForUser(email: string) {
+    return this.prismaService.invite.findMany({
+      where: {
+        email,
+      },
+      include: {
+        organization: true,
+        createdBy: true,
+      },
+    });
+  }
 }
