@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
+import { InviteStatus } from "@prisma/client";
+
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateInviteDto } from "./dtos/create-invite.dto";
 
@@ -33,6 +35,25 @@ export class InvitesRepository {
       include: {
         organization: true,
         createdBy: true,
+      },
+    });
+  }
+
+  findInviteById(id: string) {
+    return this.prismaService.invite.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  updateInviteStatus(status: InviteStatus, id: string) {
+    return this.prismaService.invite.update({
+      data: {
+        status,
+      },
+      where: {
+        id,
       },
     });
   }

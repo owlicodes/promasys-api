@@ -1,4 +1,11 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
+
+import { TUser } from "src/types";
 
 import { OrganizationMembersService } from "../organization-members/organization-members.service";
 import { UsersService } from "../users/users.service";
@@ -47,5 +54,25 @@ export class InvitesService {
 
   findInvitesForUser(email: string) {
     return this.invitesRepository.findInvitesForUser(email);
+  }
+
+  findInviteById(id: string) {
+    return this.invitesRepository.findInviteById(id);
+  }
+
+  async declineInvite(id: string, user: TUser) {
+    const invite = await this.findInviteById(id);
+
+    if (!invite) throw new NotFoundException("Invite does not exists.");
+    if (invite.email !== user.email)
+      throw new UnauthorizedException(
+        "You are not authorized to decline this invite."
+      );
+    if (invite.status !== "PENDING")
+      throw new BadRequestException(
+        "This invite is not in pending state anymore."
+      );
+
+    return this.invitesRepository.updateInviteStatus("DECLINED", id);
   }
 }
