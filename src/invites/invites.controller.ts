@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -31,5 +32,13 @@ export class InvitesController {
     @Request() req: { user: TUser }
   ) {
     return this.invitesService.declineInvite(inviteId, req.user);
+  }
+
+  @Delete(":inviteId")
+  deleteInvite(
+    @Param("inviteId") inviteId: string,
+    @Request() req: { user: TUser }
+  ) {
+    return this.invitesService.deleteInvite(inviteId, req.user);
   }
 }

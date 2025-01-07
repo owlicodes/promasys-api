@@ -75,4 +75,16 @@ export class InvitesService {
 
     return this.invitesRepository.updateInviteStatus("DECLINED", id);
   }
+
+  async deleteInvite(id: string, user: TUser) {
+    const invite = await this.findInviteById(id);
+
+    if (!invite) throw new NotFoundException("Invite does not exists.");
+    if (invite.email !== user.email)
+      throw new UnauthorizedException(
+        "You are not authorized to delete this invite."
+      );
+
+    return this.invitesRepository.deleteInvite(id);
+  }
 }

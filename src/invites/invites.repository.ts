@@ -57,4 +57,12 @@ export class InvitesRepository {
       },
     });
   }
+
+  deleteInvite(id: string) {
+    return this.prismaService.invite.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
