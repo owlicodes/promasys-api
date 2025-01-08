@@ -48,6 +48,29 @@ export class InvitesService {
     return this.invitesRepository.createInvite(data, userId, organizationId);
   }
 
+  async acceptInvite(id: string, user: TUser) {
+    const invite = await this.findInviteById(id);
+
+    if (!invite) throw new NotFoundException("Invite does not exists.");
+    if (invite.email !== user.email)
+      throw new UnauthorizedException(
+        "You are not authorized to accept this invite."
+      );
+    if (invite.status !== "PENDING")
+      throw new BadRequestException(
+        "This invite is not in pending state anymore."
+      );
+
+    await this.organizationMembersService.createOrganizationMember(
+      {
+        organizationId: invite.organizationId,
+      },
+      user
+    );
+
+    return this.invitesRepository.updateInviteStatus("ACCEPTED", id);
+  }
+
   findPendingInviteForUser(email: string) {
     return this.invitesRepository.findPendingInviteForUser(email);
   }

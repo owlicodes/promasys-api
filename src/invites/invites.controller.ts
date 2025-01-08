@@ -29,6 +29,14 @@ export class InvitesController {
     return this.invitesService.findInvitesForUser(email, req.user.id);
   }
 
+  @Patch("accept/:inviteId")
+  acceptInvite(
+    @Param("inviteId") inviteId: string,
+    @Request() req: { user: TUser }
+  ) {
+    return this.invitesService.acceptInvite(inviteId, req.user);
+  }
+
   @Patch("decline/:inviteId")
   declineInvite(
     @Param("inviteId") inviteId: string,
