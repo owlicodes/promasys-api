@@ -52,7 +52,16 @@ export class OrganizationsRepository {
   findOrganizations(userId: string) {
     return this.prismaService.organization.findMany({
       where: {
-        ownerId: userId,
+        OR: [
+          { ownerId: userId },
+          {
+            members: {
+              some: {
+                userId,
+              },
+            },
+          },
+        ],
       },
       include: {
         owner: true,
