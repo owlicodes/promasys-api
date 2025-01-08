@@ -22,8 +22,11 @@ export class InvitesController {
   constructor(private readonly invitesService: InvitesService) {}
 
   @Get()
-  findInvitesForUser(@Query("email") email: string) {
-    return this.invitesService.findInvitesForUser(email);
+  findInvitesForUser(
+    @Query("email") email: string,
+    @Request() req: { user: TUser }
+  ) {
+    return this.invitesService.findInvitesForUser(email, req.user.id);
   }
 
   @Patch("decline/:inviteId")

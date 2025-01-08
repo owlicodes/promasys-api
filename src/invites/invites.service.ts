@@ -52,8 +52,8 @@ export class InvitesService {
     return this.invitesRepository.findPendingInviteForUser(email);
   }
 
-  findInvitesForUser(email: string) {
-    return this.invitesRepository.findInvitesForUser(email);
+  findInvitesForUser(email: string, loggedInUserId: string) {
+    return this.invitesRepository.findInvitesForUser(email, loggedInUserId);
   }
 
   findInviteById(id: string) {

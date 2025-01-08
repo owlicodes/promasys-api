@@ -27,10 +27,10 @@ export class InvitesRepository {
     });
   }
 
-  findInvitesForUser(email: string) {
+  findInvitesForUser(email: string, loggedInUserId: string) {
     return this.prismaService.invite.findMany({
       where: {
-        email,
+        OR: [{ email }, { createdByUserId: loggedInUserId }],
       },
       include: {
         organization: true,
