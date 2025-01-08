@@ -80,7 +80,7 @@ export class InvitesService {
     const invite = await this.findInviteById(id);
 
     if (!invite) throw new NotFoundException("Invite does not exists.");
-    if (invite.email !== user.email)
+    if (invite.email !== user.email && invite.createdByUserId !== user.id)
       throw new UnauthorizedException(
         "You are not authorized to delete this invite."
       );
