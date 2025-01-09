@@ -22,10 +22,11 @@ export class WorkItemsRepository {
     });
   }
 
-  findWorkItemsByProjectId(projectId: string) {
+  findWorkItemsByProjectId(projectId: string, type: WORK_ITEM_TYPE | "ALL") {
     return this.prismaService.workItem.findMany({
       where: {
         projectId,
+        ...(type && type !== "ALL" ? { type } : {}),
       },
       include: {
         sprint: true,

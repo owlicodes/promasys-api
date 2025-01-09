@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 
+import { WORK_ITEM_TYPE } from "@prisma/client";
+
 import { CreateWorkItemDto } from "./dtos/create-work-item.dto";
 import { UpdateWorkItemDto } from "./dtos/update-work-item.dto";
 import { WorkItemsRepository } from "./work-items.repository";
@@ -16,8 +18,8 @@ export class WorkItemsService {
     return this.workItemsRepository.createWorkItem(data, userId);
   }
 
-  findWorkItemsByProjectId(projectId: string) {
-    return this.workItemsRepository.findWorkItemsByProjectId(projectId);
+  findWorkItemsByProjectId(projectId: string, type: WORK_ITEM_TYPE | "ALL") {
+    return this.workItemsRepository.findWorkItemsByProjectId(projectId, type);
   }
 
   findWorkItemById(workItemId: string) {

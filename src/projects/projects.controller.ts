@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from "@nestjs/common";
 
+import { WORK_ITEM_TYPE } from "@prisma/client";
 import { CreateSprintDto } from "src/sprints/dtos/create-sprint.dto";
 import { UpdateWorkItemDto } from "src/work-items/dtos/update-work-item.dto";
 
@@ -127,8 +129,11 @@ export class ProjectsController {
 
   @UseGuards(IsProjectMember)
   @Get(":projectId/work-items")
-  findWorkItemsByProjectId(@Param("projectId") projectId: string) {
-    return this.workItemsService.findWorkItemsByProjectId(projectId);
+  findWorkItemsByProjectId(
+    @Param("projectId") projectId: string,
+    @Query("type") type: WORK_ITEM_TYPE | "ALL"
+  ) {
+    return this.workItemsService.findWorkItemsByProjectId(projectId, type);
   }
 
   @UseGuards(IsProjectMember)
