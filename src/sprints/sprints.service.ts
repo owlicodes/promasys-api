@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
+import { WORK_ITEM_TYPE } from "@prisma/client";
+
 import { CreateSprintDto } from "./dtos/create-sprint.dto";
 import { UpdateSprintDto } from "./dtos/update-sprint.dto";
 import { SprintsRepository } from "./sprints.repository";
@@ -20,8 +22,8 @@ export class SprintsService {
     return this.sprintsRepository.findSingleSprintForProject(projectId);
   }
 
-  findSprintById(sprintId: string) {
-    return this.sprintsRepository.findSprintById(sprintId);
+  findSprintById(sprintId: string, type: WORK_ITEM_TYPE | "ALL") {
+    return this.sprintsRepository.findSprintById(sprintId, type);
   }
 
   updateSprint(sprintId: string, data: UpdateSprintDto) {

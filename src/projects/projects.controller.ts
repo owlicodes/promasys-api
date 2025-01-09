@@ -98,8 +98,11 @@ export class ProjectsController {
 
   @UseGuards(IsProjectMember)
   @Get(":projectId/sprints/:sprintId")
-  findSprintById(@Param("sprintId") sprintId: string) {
-    return this.sprintsService.findSprintById(sprintId);
+  findSprintById(
+    @Param("sprintId") sprintId: string,
+    @Query("type") type: WORK_ITEM_TYPE | "ALL"
+  ) {
+    return this.sprintsService.findSprintById(sprintId, type);
   }
 
   @UseGuards(IsProjectMember)
@@ -144,8 +147,11 @@ export class ProjectsController {
 
   @UseGuards(IsProjectMember)
   @Get(":projectId/work-items/:workItemId")
-  findWorkItemById(@Param("workItemId") workItemId: string) {
-    return this.workItemsService.findWorkItemById(workItemId);
+  findWorkItemById(
+    @Param("workItemId") workItemId: string,
+    @Query("type") type: WORK_ITEM_TYPE | "ALL"
+  ) {
+    return this.workItemsService.findWorkItemById(workItemId, type);
   }
 
   @UseGuards(IsProjectMember)

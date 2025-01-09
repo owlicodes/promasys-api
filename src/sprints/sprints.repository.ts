@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { SPRINT_STATUS } from "@prisma/client";
+import { SPRINT_STATUS, WORK_ITEM_TYPE } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateSprintDto } from "./dtos/create-sprint.dto";
@@ -37,13 +37,16 @@ export class SprintsRepository {
     });
   }
 
-  findSprintById(sprintId: string) {
+  findSprintById(sprintId: string, type: WORK_ITEM_TYPE | "ALL") {
     return this.prismaService.sprint.findUnique({
       where: {
         id: sprintId,
       },
       include: {
         workItems: {
+          where: {
+            ...(type && type !== "ALL" ? { type } : {}),
+          },
           include: {
             sprint: true,
           },

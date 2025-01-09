@@ -34,13 +34,16 @@ export class WorkItemsRepository {
     });
   }
 
-  findWorkItemById(workItemId: string) {
+  findWorkItemById(workItemId: string, type: WORK_ITEM_TYPE | "ALL") {
     return this.prismaService.workItem.findFirst({
       where: {
         id: workItemId,
       },
       include: {
         childWorkItems: {
+          where: {
+            ...(type && type !== "ALL" ? { type } : {}),
+          },
           include: {
             sprint: true,
           },

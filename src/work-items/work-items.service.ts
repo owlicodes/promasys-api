@@ -22,8 +22,8 @@ export class WorkItemsService {
     return this.workItemsRepository.findWorkItemsByProjectId(projectId, type);
   }
 
-  findWorkItemById(workItemId: string) {
-    return this.workItemsRepository.findWorkItemById(workItemId);
+  findWorkItemById(workItemId: string, type: WORK_ITEM_TYPE | "ALL") {
+    return this.workItemsRepository.findWorkItemById(workItemId, type);
   }
 
   findStoryWorkItemsByProjectId(projectId: string) {
