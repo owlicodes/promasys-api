@@ -7,6 +7,11 @@ export const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   RATE_LIMIT_TTL: z.coerce.number(),
   RATE_LIMIT: z.coerce.number(),
+  OPEN_AI_API_KEY: z.string(),
+  ENABLE_AI: z
+    .string()
+    .default("false")
+    .transform((val) => val === "true"),
 });
 
 export type EnvironmentVariables = z.infer<typeof envSchema>;

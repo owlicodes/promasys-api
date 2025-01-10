@@ -38,4 +38,16 @@ export class EnvConfigService {
       infer: true,
     })!;
   }
+
+  getOpenAiApiKey(): string {
+    return this.configService.get<string>("OPEN_AI_API_KEY", {
+      infer: true,
+    });
+  }
+
+  getEnableAi(): string {
+    return this.configService.get<boolean>("ENABLE_AI", {
+      infer: true,
+    });
+  }
 }

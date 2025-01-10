@@ -9,6 +9,7 @@ import { EnvConfigModule } from "./env-config/env-config.module";
 import { EnvConfigService } from "./env-config/env-config.service";
 import { HealthModule } from "./health/health.module";
 import { InvitesModule } from "./invites/invites.module";
+import { OpenaiModule } from "./openai/openai.module";
 import { OrganizationMembersModule } from "./organization-members/organization-members.module";
 import { OrganizationsModule } from "./organizations/organizations.module";
 import { PrismaService } from "./prisma/prisma.service";
@@ -59,6 +60,7 @@ import { WorkItemsModule } from "./work-items/work-items.module";
     WorkItemsModule,
     InvitesModule,
     OrganizationMembersModule,
+    OpenaiModule,
   ],
   controllers: [],
   providers: [
